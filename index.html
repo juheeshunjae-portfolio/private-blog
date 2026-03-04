@@ -3,180 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>juheelee blog | Creative Marketer</title>
+    <title>Juhee Lee Blog</title>
     <style>
-        /* 폰트 설정 */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Pretendard:wght@400;600&display=swap');
+        /* 폰트: 우아한 세리프체와 깔끔한 산세리프체 조합 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;700&family=Pretendard:wght@300;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Pretendard', sans-serif;
-            line-height: 1.8;
-            color: #222;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px 50px 20px;
-            background-color: #f9f9f7; /* 고급스러운 미색 배경 */
+            background-color: #f5f5f5;
+            color: #333;
+            overflow-x: hidden;
         }
 
-        /* --- 1. Spline 3D 영역 (로고 가리기 기술) --- */
-        .spline-wrapper {
-            position: relative;
-            width: 100%;
-            height: 480px; /* 보여주고 싶은 높이 */
-            overflow: hidden; /* 영역 밖으로 나가는 Spline 로고를 숨김 */
-            margin-bottom: 20px;
-            border-radius: 0 0 40px 40px; /* 하단 둥글게 처리 */
-        }
-
-        .spline-wrapper iframe {
-            position: absolute;
-            top: -50px; /* 위로 살짝 올려서 상단 여백 제거 */
+        /* --- 1. Spline 배경 설정 (하단 링크 가리기) --- */
+        .background-container {
+            position: fixed;
+            top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% + 100px); /* 실제보다 크게 설정해서 로고가 있는 하단을 잘라냄 */
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-container iframe {
+            position: absolute;
+            top: -50px; /* 위쪽 여백 조정 */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 120px); /* 실제보다 길게 만들어 하단 로고를 화면 밖으로 밀어냄 */
             border: none;
         }
 
-        /* --- 2. 헤더 및 네비게이션 --- */
+        /* --- 2. 상단 네비게이션 (검색, 로고, 목차) --- */
         header {
-            text-align: center;
-            margin-bottom: 60px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
+            z-index: 100;
         }
 
-        h1 {
-            font-family: 'Noto Serif KR', serif;
-            font-size: 3.5rem;
-            margin: 0;
-            letter-spacing: -2px;
-            font-weight: 700;
+        .header-left .search-icon {
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.3s;
         }
+        .header-left .search-icon:hover { opacity: 1; }
 
-        .tagline {
+        .header-center .small-logo {
             font-family: 'Noto Serif KR', serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
             font-style: italic;
-            color: #777;
-            margin-top: 10px;
+            text-decoration: none;
+            color: #333;
         }
 
-        nav {
-            margin-top: 40px;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            padding: 15px 0;
+        .header-right .menu-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        .header-right .menu-icon:hover { opacity: 1; }
+
+        /* --- 3. 중앙 메인 섹션 --- */
+        .main-hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
-        /* 마우스 호버 효과 설정 */
-        nav a {
-            margin: 0 25px;
+        .main-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 8rem; /* 이미지처럼 아주 크게 */
+            font-weight: 700;
+            letter-spacing: -3px;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+            user-select: none;
+        }
+
+        /* --- 4. 하단 카테고리 메뉴 --- */
+        .category-nav {
+            display: flex;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .category-nav a {
+            font-family: 'Pretendard', sans-serif;
             text-decoration: none;
             color: #555;
+            font-size: 0.85rem;
             font-weight: 600;
-            font-size: 0.95rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: all 0.3s ease; /* 부드러운 변화 */
-            display: inline-block;
+            padding: 5px 10px;
+            transition: all 0.4s ease;
+            position: relative;
         }
 
-        nav a:hover {
-            color: #997a5d; /* 따뜻한 브라운 톤으로 변경 */
-            transform: translateY(-2px); /* 살짝 위로 올라가는 효과 */
+        /* 마우스 호버/드래그 느낌의 효과 */
+        .category-nav a:hover {
+            color: #997a5d; /* 고전적인 브라운 톤 */
+            background-color: rgba(153, 122, 93, 0.1);
+            transform: translateY(-3px);
         }
 
-        /* --- 3. 콘텐츠 레이아웃 --- */
-        .section-title {
-            font-family: 'Noto Serif KR', serif;
-            font-size: 1.6rem;
-            margin: 40px 0 30px 0;
-            text-align: center;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .card {
-            background: #fff;
-            padding: 35px;
-            border: 1px solid #eee;
-            transition: 0.4s;
-        }
-
-        .card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            border-color: #997a5d;
-        }
-
-        .category {
-            font-size: 0.75rem;
-            color: #997a5d;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: block;
+        /* 스크롤 안내 표시 */
+        .scroll-text {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: #999;
             text-transform: uppercase;
-        }
-
-        .card h3 {
-            font-family: 'Noto Serif KR', serif;
-            margin: 0 0 15px 0;
-            font-size: 1.4rem;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 80px;
-            color: #bbb;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
         }
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2.5rem; }
-            nav a { margin: 0 10px; font-size: 0.8rem; }
+            .main-title { font-size: 4rem; }
+            .category-nav { gap: 15px; flex-direction: column; }
+            header { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="spline-wrapper">
-    <iframe src='https://my.spline.design/glassbuttonsinspiredbyreijopalmiste-Nlb6vC2i8D4mp1oQBWbNwDTM/' 
-            frameborder='0'></iframe>
-</div>
-
-<header>
-    <h1>juheelee blog</h1>
-    <p class="tagline">마케팅의 전략, 예술의 깊이, 여행의 영감을 기록합니다.</p>
-    
-    <nav>
-        <a href="#marketing">Marketing</a>
-        <a href="#art">Art & Culture</a>
-        <a href="#travel">Travel</a>
-    </nav>
-</header>
-
-<div class="section-title">Featured Stories</div>
-
-<div class="grid">
-    <div class="card">
-        <span class="category">Art & Culture</span>
-        <h3>서양 미술사에서 찾은 공간 마케팅</h3>
-        <p>캔버스 너머의 이야기가 어떻게 현대 브랜드의 공간 철학이 되었는지 분석합니다.</p>
+    <div class="background-container">
+        <iframe src='https://my.spline.design/glassbuttonsinspiredbyreijopalmiste-Nlb6vC2i8D4mp1oQBWbNwDTM/' frameborder='0'></iframe>
     </div>
-    
-    <div class="card">
-        <span class="category">Marketing</span>
-        <h3>디지털 마케터의 퍼스널 브랜딩</h3>
-        <p>3D 인터랙티브 요소를 활용해 나만의 포트폴리오를 차별화하는 전략적 접근법.</p>
-    </div>
-</div>
 
-<footer>
-    © 2024 JUHEE LEE. CRAFTED WITH INSPIRATION.
-</footer>
+    <header>
+        <div class="header-left">
+            <span class="search-icon" title="검색">🔍</span>
+        </div>
+        <div class="header-center">
+            <a href="#" class="small-logo">juheelee blog</a>
+        </div>
+        <div class="header-right">
+            <a href="#index" class="menu-icon">
+                <span>INDEX</span>
+                <span style="font-size: 1.2rem;">≡</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="main-hero">
+        <h1 class="main-title">Juhee Lee</h1>
+        
+        <nav class="category-nav">
+            <a href="#marketing">Marketing</a>
+            <a href="#art">Art & Culture</a>
+            <a href="#travel">Travel</a>
+        </nav>
+
+        <div class="scroll-text">Scroll</div>
+    </main>
+
+    <section id="marketing" style="height: 100vh; padding: 100px;">
+        <h2>Marketing Log</h2>
+        </section>
 
 </body>
 </html>
