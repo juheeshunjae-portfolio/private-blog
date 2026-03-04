@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>juheelee blog | Creative Marketer</title>
     <style>
+        /* 폰트 설정 */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Pretendard:wght@400;600&display=swap');
 
         body {
@@ -13,20 +14,30 @@
             color: #222;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f7;
+            padding: 0 20px 50px 20px;
+            background-color: #f9f9f7; /* 고급스러운 미색 배경 */
         }
 
-        /* 3D Hero 섹션 */
-        .hero-3d {
+        /* --- 1. Spline 3D 영역 (로고 가리기 기술) --- */
+        .spline-wrapper {
+            position: relative;
             width: 100%;
-            height: 450px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            height: 480px; /* 보여주고 싶은 높이 */
+            overflow: hidden; /* 영역 밖으로 나가는 Spline 로고를 숨김 */
+            margin-bottom: 20px;
+            border-radius: 0 0 40px 40px; /* 하단 둥글게 처리 */
         }
 
+        .spline-wrapper iframe {
+            position: absolute;
+            top: -50px; /* 위로 살짝 올려서 상단 여백 제거 */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 100px); /* 실제보다 크게 설정해서 로고가 있는 하단을 잘라냄 */
+            border: none;
+        }
+
+        /* --- 2. 헤더 및 네비게이션 --- */
         header {
             text-align: center;
             margin-bottom: 60px;
@@ -37,17 +48,47 @@
             font-size: 3.5rem;
             margin: 0;
             letter-spacing: -2px;
+            font-weight: 700;
         }
 
-        nav { margin-top: 20px; }
+        .tagline {
+            font-family: 'Noto Serif KR', serif;
+            font-style: italic;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        nav {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        /* 마우스 호버 효과 설정 */
         nav a {
-            margin: 0 15px;
+            margin: 0 25px;
             text-decoration: none;
-            color: #333;
+            color: #555;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease; /* 부드러운 변화 */
+            display: inline-block;
+        }
+
+        nav a:hover {
+            color: #997a5d; /* 따뜻한 브라운 톤으로 변경 */
+            transform: translateY(-2px); /* 살짝 위로 올라가는 효과 */
+        }
+
+        /* --- 3. 콘텐츠 레이아웃 --- */
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.6rem;
+            margin: 40px 0 30px 0;
+            text-align: center;
         }
 
         .grid {
@@ -58,51 +99,84 @@
 
         .card {
             background: #fff;
-            padding: 30px;
+            padding: 35px;
             border: 1px solid #eee;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-color: #997a5d;
+        }
 
         .category {
             font-size: 0.75rem;
             color: #997a5d;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: block;
+            text-transform: uppercase;
+        }
+
+        .card h3 {
+            font-family: 'Noto Serif KR', serif;
+            margin: 0 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            color: #bbb;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.5rem; }
+            nav a { margin: 0 10px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="hero-3d">
+<div class="spline-wrapper">
     <iframe src='https://my.spline.design/glassbuttonsinspiredbyreijopalmiste-Nlb6vC2i8D4mp1oQBWbNwDTM/' 
-            frameborder='0' width='100%' height='100%'></iframe>
+            frameborder='0'></iframe>
 </div>
 
 <header>
     <h1>juheelee blog</h1>
-    <p style="font-family: 'Noto Serif KR', serif; italic; color: #777;">마케팅, 예술, 그리고 입체적인 기록들</p>
+    <p class="tagline">마케팅의 전략, 예술의 깊이, 여행의 영감을 기록합니다.</p>
+    
     <nav>
-        <a href="#">Portfolio</a>
-        <a href="#">Art & Culture</a>
-        <a href="#">Travel</a>
+        <a href="#marketing">Marketing</a>
+        <a href="#art">Art & Culture</a>
+        <a href="#travel">Travel</a>
     </nav>
 </header>
+
+<div class="section-title">Featured Stories</div>
 
 <div class="grid">
     <div class="card">
         <span class="category">Art & Culture</span>
-        <h3>서양 미술사에서 찾은 '공간 마케팅'의 기원</h3>
-        <p>18세기 살롱 문화가 어떻게 현대의 커뮤니티 공간으로 진화했을까요?</p>
+        <h3>서양 미술사에서 찾은 공간 마케팅</h3>
+        <p>캔버스 너머의 이야기가 어떻게 현대 브랜드의 공간 철학이 되었는지 분석합니다.</p>
     </div>
-    <div class="card" style="background: #222; color: #fff;">
-        <span class="category" style="color: #997a5d;">Marketing Insight</span>
-        <h3>3D 인터랙티브 요소가 체류시간에 미치는 영향</h3>
-        <p>방금 위에서 만져보신 버튼들, 재미있으셨나요? 이것이 브랜딩의 시작입니다.</p>
+    
+    <div class="card">
+        <span class="category">Marketing</span>
+        <h3>디지털 마케터의 퍼스널 브랜딩</h3>
+        <p>3D 인터랙티브 요소를 활용해 나만의 포트폴리오를 차별화하는 전략적 접근법.</p>
     </div>
 </div>
+
+<footer>
+    © 2024 JUHEE LEE. CRAFTED WITH INSPIRATION.
+</footer>
 
 </body>
 </html>
