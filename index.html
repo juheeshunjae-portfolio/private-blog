@@ -27,8 +27,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 30px;
-            z-index: 5000; /* 최상단 고정 */
+            padding: 25px 40px;
+            z-index: 5000;
             mix-blend-mode: difference;
             color: white; 
         }
@@ -41,7 +41,7 @@
             display: none; background: none; border-bottom: 1px solid white; margin-left: 10px;
         }
         #search-input-container input {
-            background: none; border: none; color: white; padding: 5px; outline: none; font-size: 0.9rem; width: 120px;
+            background: none; border: none; color: white; padding: 5px; outline: none; font-size: 0.9rem; width: 150px;
         }
 
         .header-right { position: relative; }
@@ -61,111 +61,117 @@
             color: #1a1a1a; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px;
         }
 
-        /* --- 2. Hero 섹션 --- */
+        /* --- 2. Hero 섹션 (화질 복구 및 워터마크 제거) --- */
         #main-hero {
             position: relative; width: 100%; height: 85vh; overflow: hidden;
-            display: flex; justify-content: center; align-items: center; background-color: #f5f5f5;
+            background-color: #f5f5f5;
         }
-        /* [핵심 수정] 워터마크와 검은 선을 완벽히 가리기 위해 iframe을 더 크게 확장하고 상하 여백을 넉넉히 줍니다. */
         .spline-container { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            z-index: 1; 
-            overflow: hidden; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 1; overflow: hidden; 
         }
         .spline-container iframe { 
-            position: absolute;
             width: 100%; 
-            height: calc(100% + 140px); /* 높이를 대폭 늘려 로고를 화면 아래로 완전히 밀어냄 */
-            top: -70px; /* 늘어난 높이만큼 위로 올려 중앙을 맞춤 (검은 선 artifact 방지) */
-            left: 0;
+            height: calc(100% + 70px); /* 화질 저하 없이 로고만 하단으로 밀어냄 */
             border: none; 
         }
         
         .hero-title {
-            position: relative; z-index: 10; font-family: 'Noto Serif KR', serif;
-            font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 700; letter-spacing: -2px;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 10; font-family: 'Noto Serif KR', serif;
+            font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 700; letter-spacing: -3px;
             color: #1a1a1a; text-align: center; pointer-events: none;
         }
 
         /* --- 3. 카테고리 네비게이션 --- */
         .category-bar {
             position: sticky; top: 0; width: 100%; background: rgba(255,255,255,0.98);
-            display: flex; justify-content: center; gap: 40px; padding: 20px 0;
+            display: flex; justify-content: center; gap: 50px; padding: 25px 0;
             z-index: 1000; border-bottom: 1px solid #f0f0f0;
         }
-        .category-bar a { text-decoration: none; color: #888; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
+        .category-bar a { text-decoration: none; color: #888; font-size: 0.85rem; letter-spacing: 2px; transition: 0.3s; }
         .category-bar a:hover { color: #1a1a1a; font-weight: 600; }
 
         /* --- 4. 콘텐츠 영역 --- */
-        .content-section { padding: 80px 8%; background: #ffffff; }
-        .section-header { margin-bottom: 40px; border-left: 4px solid #1a1a1a; padding-left: 20px; }
-        .section-header h2 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; margin-bottom: 5px; }
-        .section-header p { color: #888; font-size: 0.9rem; }
+        .content-section { padding: 120px 10%; background: #ffffff; }
+        .section-header { margin-bottom: 50px; border-left: 4px solid #1a1a1a; padding-left: 20px; }
+        .section-header h2 { font-family: 'Noto Serif KR', serif; font-size: 2.5rem; margin-bottom: 8px; }
+        .section-header p { color: #888; font-size: 0.95rem; font-weight: 300; }
 
         .post-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px; margin-bottom: 30px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px; margin-bottom: 40px;
+        }
+
+        /* 세부 페이지용 그리드 (3열 고정) */
+        #sub-post-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
 
         .post-card {
-            background: #fff; border: 1px solid #eee; padding: 35px;
-            transition: all 0.4s ease; cursor: pointer;
-            display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;
+            background: #fff; border: 1px solid #eee; padding: 45px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer;
+            display: flex; flex-direction: column; justify-content: space-between; min-height: 250px;
         }
-        .post-card:hover { transform: translateY(-5px); border-color: #1a1a1a; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
-        .post-card h3 { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; margin-bottom: 15px; }
-        .post-card p { font-size: 0.9rem; color: #666; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .date-label { font-size: 0.7rem; color: #ccc; margin-top: 20px; letter-spacing: 1px; }
+        .post-card:hover { transform: translateY(-8px); border-color: #1a1a1a; box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+        .post-card h3 { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; margin-bottom: 18px; line-height: 1.4; }
+        .post-card p { font-size: 0.95rem; color: #666; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.7; }
+        .date-label { font-size: 0.75rem; color: #ccc; margin-top: 25px; letter-spacing: 1px; }
 
         .view-all-btn {
-            display: inline-block; padding: 12px 30px; border: 1px solid #1a1a1a;
-            text-decoration: none; color: #1a1a1a; font-size: 0.75rem; font-weight: 600;
+            display: inline-block; padding: 14px 35px; border: 1px solid #1a1a1a;
+            text-decoration: none; color: #1a1a1a; font-size: 0.8rem; font-weight: 600;
             letter-spacing: 2px; transition: 0.3s; cursor: pointer;
         }
+        .view-all-btn:hover { background: #1a1a1a; color: #fff; }
 
-        /* --- 5. 세부 사이트 (중요: 모바일 대응 고도화) --- */
+        /* --- 5. 세부 사이트 뷰 --- */
         #sub-site-view {
             display: none; 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #ffffff; z-index: 4000; /* 푸터와 헤더 사이 */
-            padding: 80px 8% 40px; overflow-y: scroll; /* 모달 내부 스크롤 강제 */
-            -webkit-overflow-scrolling: touch;
+            position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh;
+            background: #ffffff; z-index: 4500;
+            padding: 100px 10% 80px;
         }
         .back-btn { 
-            display: inline-block; margin-bottom: 30px; cursor: pointer; 
-            font-weight: 600; font-size: 0.8rem; color: #1a1a1a;
-            border-bottom: 1px solid #1a1a1a; padding-bottom: 3px;
+            display: inline-block; margin-bottom: 50px; cursor: pointer; 
+            font-weight: 600; font-size: 0.9rem; color: #1a1a1a;
+            border-bottom: 2px solid #1a1a1a; padding-bottom: 5px; letter-spacing: 1px;
         }
 
         /* --- 6. 모달 --- */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; z-index: 6000; padding: 100px 8%; overflow-y: auto;
+            background: white; z-index: 6000; padding: 120px 10%; overflow-y: auto;
         }
-        .modal-content { max-width: 800px; margin: 0 auto; }
-        .modal-close { position: fixed; top: 30px; right: 30px; font-size: 2rem; cursor: pointer; z-index: 6001; }
+        .modal-content { max-width: 850px; margin: 0 auto; }
+        .modal-close { position: fixed; top: 40px; right: 40px; font-size: 2.5rem; cursor: pointer; z-index: 6001; font-weight: 200; }
 
         /* --- 7. 푸터 --- */
         footer {
-            padding: 60px 8%; border-top: 1px solid #f5f5f5;
+            padding: 80px 10%; border-top: 1px solid #f5f5f5;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .footer-left h4 { font-family: 'Noto Serif KR', serif; font-size: 1.2rem; }
-        .footer-right { display: flex; gap: 20px; }
-        .footer-right a { text-decoration: none; color: #aaa; font-size: 0.8rem; letter-spacing: 1px; }
+        .footer-left h4 { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; }
+        .footer-right { display: flex; gap: 25px; }
+        .footer-right a { text-decoration: none; color: #aaa; font-size: 0.85rem; letter-spacing: 1px; transition: 0.3s; }
+        .footer-right a:hover { color: #1a1a1a; }
+
+        /* 모바일 대응 */
+        @media (max-width: 1024px) {
+            #sub-post-grid { grid-template-columns: repeat(2, 1fr); }
+        }
 
         @media (max-width: 768px) {
-            header { padding: 15px 20px; }
-            .content-section { padding: 60px 20px; }
-            .hero-title { font-size: 2.2rem; }
+            header { padding: 20px; }
+            .content-section { padding: 80px 25px; }
+            .hero-title { font-size: 2.8rem; }
             .category-bar { gap: 20px; }
-            .post-grid { grid-template-columns: 1fr; }
+            .post-grid, #sub-post-grid { grid-template-columns: 1fr; }
             footer { flex-direction: column; gap: 30px; text-align: center; }
-            #sub-site-view { padding-top: 70px; }
+            #sub-site-view { padding: 80px 20px; }
         }
     </style>
 </head>
@@ -174,7 +180,7 @@
     <header>
         <div class="header-left">
             <button class="search-btn" onclick="toggleSearch()"><svg class="search-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <div id="search-input-container"><input type="text" id="main-search" placeholder="Search..." onkeyup="handleSearch(event)"></div>
+            <div id="search-input-container"><input type="text" id="main-search" placeholder="Search insights..." onkeyup="handleSearch(event)"></div>
         </div>
         <div class="header-right">
             <div class="menu-btn">≡</div>
@@ -199,28 +205,28 @@
         </nav>
 
         <section id="marketing" class="content-section">
-            <div class="section-header"><h2>Marketing</h2><p>브랜드 전략과 시장의 흐름을 읽는 시선</p></div>
+            <div class="section-header"><h2>Marketing</h2><p>데이터와 직관 사이, 브랜드 전략의 기록</p></div>
             <div id="marketing-posts" class="post-grid"></div>
             <div style="text-align: center;"><div class="view-all-btn" onclick="openSubSite('marketing')">VIEW ALL PROJECTS</div></div>
         </section>
 
         <section id="art" class="content-section" style="background-color: #fafafa;">
-            <div class="section-header"><h2>Art & Culture</h2><p>예술적 영감과 문화적 통찰의 기록</p></div>
+            <div class="section-header"><h2>Art & Culture</h2><p>예술적 영감이 일상의 통찰이 되는 순간</p></div>
             <div id="art-posts" class="post-grid"></div>
             <div style="text-align: center;"><div class="view-all-btn" onclick="openSubSite('art')">VIEW ALL STORIES</div></div>
         </section>
 
         <section id="travel" class="content-section">
-            <div class="section-header"><h2>Travel</h2><p>낯선 곳에서 마주한 새로운 여정</p></div>
+            <div class="section-header"><h2>Travel</h2><p>낯선 공간이 주는 새로운 마케팅적 시선</p></div>
             <div id="travel-posts" class="post-grid"></div>
             <div style="text-align: center;"><div class="view-all-btn" onclick="openSubSite('travel')">VIEW ALL JOURNEYS</div></div>
         </section>
     </div>
 
     <div id="sub-site-view">
-        <div class="back-btn" onclick="closeSubSite()">← BACK TO HOME</div>
-        <div class="section-header"><h2 id="sub-title">Category</h2><p id="sub-desc">전체 리스트를 확인하세요.</p></div>
-        <div id="sub-post-grid" class="post-grid"></div>
+        <div class="back-btn" onclick="closeSubSite()">← RETURN TO ARCHIVE</div>
+        <div class="section-header"><h2 id="sub-title">Category</h2><p id="sub-desc">Explore the full collection of stories.</p></div>
+        <div id="sub-post-grid"></div>
     </div>
 
     <div id="read-modal" class="modal">
@@ -230,11 +236,11 @@
 
     <div id="search-modal" class="modal">
         <span class="modal-close" onclick="closeModal('search-modal')">✕</span>
-        <div class="modal-content"><h2>Search Results</h2><div id="search-results-grid" class="post-grid" style="margin-top:30px;"></div></div>
+        <div class="modal-content"><h2>Search Results</h2><div id="search-results-grid" class="post-grid" style="margin-top:40px;"></div></div>
     </div>
 
     <footer>
-        <div class="footer-left"><h4>Juhee Lee Blog</h4><p style="color:#bbb; font-size:0.7rem; margin-top:5px;">© 2026. Juhee Lee. All Rights Reserved.</p></div>
+        <div class="footer-left"><h4>Juhee Lee Blog</h4><p style="color:#bbb; font-size:0.75rem; margin-top:8px;">© 2026. Juhee Lee. All Rights Reserved.</p></div>
         <div class="footer-right">
             <a href="mailto:juheeshunjae@sookmyung.ac.kr">E-MAIL</a>
             <a href="https://www.linkedin.com/in/juhee-lee-33676335b/" target="_blank">LINKEDIN</a>
@@ -242,6 +248,9 @@
     </footer>
 
     <script>
+        // 현재 열려있는 카테고리를 추적하는 변수
+        let currentCategory = "";
+
         const posts = [
             {id: 15, category: 'marketing', title: '2026 마케팅 트렌드 분석', content: '초개인화 기술이 가져올 브랜드 커뮤니케이션의 변화를 예측해봅니다.', date: '2026-03-05'},
             {id: 14, category: 'marketing', title: '팬덤 마케팅의 실전 전략', content: '강력한 브랜드 충성도를 만드는 커뮤니티 빌딩 노하우.', date: '2026-03-01'},
@@ -274,6 +283,7 @@
         }
 
         function openSubSite(cat) {
+            currentCategory = cat; // 현재 카테고리 저장
             const subView = document.getElementById('sub-site-view');
             const homeView = document.getElementById('home-view');
             homeView.style.display = 'none';
@@ -286,9 +296,18 @@
         }
 
         function closeSubSite() {
-            document.getElementById('home-view').style.display = 'block';
-            document.getElementById('sub-site-view').style.display = 'none';
-            window.scrollTo(0,0);
+            const subView = document.getElementById('sub-site-view');
+            const homeView = document.getElementById('home-view');
+            homeView.style.display = 'block';
+            subView.style.display = 'none';
+            
+            // 저장된 카테고리 위치로 스크롤 이동
+            if (currentCategory) {
+                const targetSection = document.getElementById(currentCategory);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         }
 
         function toggleSearch() {
@@ -310,9 +329,9 @@
             const p = posts.find(x => x.id === id);
             document.getElementById('read-content').innerHTML = `
                 <p style="color:#997a5d; font-weight:600; letter-spacing:2px; margin-bottom:15px;">${p.category.toUpperCase()}</p>
-                <h1 style="font-family:'Noto Serif KR', serif; font-size:2.5rem; margin-bottom:30px; line-height:1.2;">${p.title}</h1>
-                <div style="font-size:1.1rem; line-height:2; color:#333; white-space:pre-wrap;">${p.content}</div>
-                <div style="margin-top:60px; padding-top:20px; border-top:1px solid #eee; cursor:pointer; font-weight:600;" onclick="closeModal('read-modal')">BACK</div>
+                <h1 style="font-family:'Noto Serif KR', serif; font-size:2.8rem; margin-bottom:30px; line-height:1.2; letter-spacing:-1px;">${p.title}</h1>
+                <div style="font-size:1.15rem; line-height:2.1; color:#333; white-space:pre-wrap; font-weight:300;">${p.content}</div>
+                <div style="margin-top:80px; padding-top:20px; border-top:1px solid #eee; cursor:pointer; font-weight:600; letter-spacing:1px;" onclick="closeModal('read-modal')">← BACK TO LIST</div>
             `;
             document.getElementById('read-modal').style.display = 'block';
         }
