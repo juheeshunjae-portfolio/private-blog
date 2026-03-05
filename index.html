@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juhee Lee Blog</title>
     <style>
-        /* 폰트 설정 */
+        /* 폰트 및 기본 설정 */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Pretendard:wght@100;400;600&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +15,7 @@
             background-color: #ffffff;
             color: #1a1a1a;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* --- 1. 상단 네비게이션 --- */
@@ -26,72 +27,49 @@
             justify-content: space-between;
             align-items: center;
             padding: 25px 40px;
-            z-index: 1000;
-            mix-blend-mode: difference; /* 배경색에 따라 반전 */
+            z-index: 2000; /* 메뉴가 위로 오도록 */
+            mix-blend-mode: difference;
             color: white; 
         }
 
         .header-left .search-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
+            background: none; border: none; cursor: pointer; padding: 5px; color: inherit;
         }
 
-        .search-svg {
-            width: 20px;
-            height: 20px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.5;
-        }
+        .search-svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 
-        /* --- 메뉴 드롭다운 기능 추가 --- */
-        .header-right {
-            position: relative;
-        }
+        .header-right { position: relative; }
+        .menu-btn { font-size: 1.8rem; text-decoration: none; color: inherit; cursor: pointer; }
 
-        .menu-btn {
-            font-size: 1.8rem;
-            text-decoration: none;
-            color: currentColor;
-            line-height: 1;
-            cursor: pointer;
-        }
-
-        /* 마우스 드래그(호버) 시 열리는 세부 페이지(메뉴) */
+        /* 목차 비침 방지 및 디자인 수정 */
         .menu-dropdown {
             display: none;
             position: absolute;
             top: 40px;
             right: 0;
-            background-color: white; /* 흰색 바탕 */
-            min-width: 200px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-color: #ffffff; /* 완전 불투명 흰색 */
+            min-width: 220px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
             padding: 20px 0;
-            z-index: 1001;
+            z-index: 2001;
             mix-blend-mode: normal; /* 글자 반전 해제 */
+            border: 1px solid #f0f0f0;
         }
 
-        .header-right:hover .menu-dropdown {
-            display: block;
-        }
+        .header-right:hover .menu-dropdown { display: block; }
 
         .menu-dropdown a {
             display: block;
-            padding: 10px 30px;
+            padding: 12px 30px;
             text-decoration: none;
             color: #1a1a1a;
             font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: 1px;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
-        .menu-dropdown a:hover {
-            background-color: #f5f5f5;
-            color: #997a5d;
-        }
+        .menu-dropdown a:hover { background-color: #f9f9f9; color: #997a5d; padding-left: 35px; }
 
         /* --- 2. Hero 섹션 --- */
         .hero-section {
@@ -106,25 +84,15 @@
         }
 
         .spline-container {
-            position: absolute;
-            top: -60px;
-            left: 0;
-            width: 100%;
-            height: calc(100% + 120px);
-            z-index: 1;
+            position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 120px); z-index: 1;
         }
 
-        .spline-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        .spline-container iframe { width: 100%; height: 100%; border: none; }
 
         .hero-title {
-            position: relative;
-            z-index: 10;
+            position: relative; z-index: 10;
             font-family: 'Noto Serif KR', serif;
-            font-size: 6rem;
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
             letter-spacing: -2px;
             color: #1a1a1a;
@@ -132,89 +100,107 @@
             pointer-events: none;
         }
 
-        /* --- 3. 카테고리 네비게이션 (변경 없음) --- */
+        /* --- 3. 카테고리 네비게이션 --- */
         .category-bar {
-            position: sticky;
-            top: 0;
-            width: 100%;
+            position: sticky; top: 0; width: 100%;
             background: #ffffff;
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            padding: 30px 0;
-            z-index: 900;
-            border-bottom: 1px solid #f0f0f0;
+            display: flex; justify-content: center;
+            gap: 60px; padding: 30px 0;
+            z-index: 900; border-bottom: 1px solid #f0f0f0;
         }
 
         .category-bar a {
-            text-decoration: none;
-            color: #888;
-            font-size: 0.9rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
+            text-decoration: none; color: #888; font-size: 0.9rem;
+            letter-spacing: 2px; transition: all 0.3s ease;
         }
 
-        .category-bar a:hover {
-            color: #1a1a1a;
-            font-weight: 600;
-        }
+        .category-bar a:hover { color: #1a1a1a; font-weight: 600; }
 
-        /* --- 4. 콘텐츠 영역 & 최근 글 카드 추가 --- */
-        .content-section {
-            min-height: 100vh;
-            padding: 100px 10%;
-            background: #ffffff;
-        }
+        /* --- 4. 콘텐츠 영역 (포스트 카드) --- */
+        .content-section { padding: 100px 10%; background: #ffffff; }
 
-        .recent-posts {
+        .section-header { margin-bottom: 50px; border-left: 4px solid #1a1a1a; padding-left: 20px; }
+        .section-header h2 { font-family: 'Noto Serif KR', serif; font-size: 2.5rem; margin-bottom: 5px; }
+        .section-header p { color: #888; font-size: 0.95rem; }
+
+        .post-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px; margin-bottom: 40px;
         }
 
         .post-card {
-            background: #fff;
-            border: 1px solid #f0f0f0;
-            padding: 30px;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
+            background: #fff; border: 1px solid #eee; padding: 40px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer; position: relative; overflow: hidden;
         }
 
         .post-card:hover {
-            background-color: #fafafa;
-            border-color: #997a5d;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transform: translateY(-8px); border-color: #997a5d;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
-        .post-card h3 {
-            font-family: 'Noto Serif KR', serif;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
+        .post-card h3 { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; margin-bottom: 15px; transition: 0.3s; }
+        .post-card:hover h3 { color: #997a5d; }
+        .post-card p { font-size: 0.95rem; color: #666; line-height: 1.8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* 전체보기 버튼 */
+        .view-all-btn {
+            display: inline-block; padding: 12px 35px; border: 1px solid #1a1a1a;
+            text-decoration: none; color: #1a1a1a; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 2px; transition: all 0.3s; cursor: pointer;
+        }
+        .view-all-btn:hover { background: #1a1a1a; color: #fff; }
+
+        /* --- 5. 글쓰기/관리자 시스템 --- */
+        .admin-controls { text-align: right; padding: 20px 10%; background: #fdfdfd; }
+        .write-btn { padding: 8px 15px; background: #997a5d; color: white; border: none; cursor: pointer; font-size: 0.8rem; }
+        
+        /* 모달 (글 읽기/쓰기 창) */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.98); z-index: 3000; padding: 100px 10%;
+            overflow-y: auto;
+        }
+        .modal-content { max-width: 800px; margin: 0 auto; }
+        .modal-close { position: fixed; top: 40px; right: 40px; font-size: 2rem; cursor: pointer; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 15px; border: 1px solid #ddd; font-family: inherit;
+        }
+        .form-group textarea { height: 300px; }
+        .save-btn { background: #1a1a1a; color: #fff; padding: 15px 40px; border: none; cursor: pointer; }
+
+        /* --- 6. 푸터 --- */
+        footer {
+            padding: 80px 10%; border-top: 1px solid #f0f0f0;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        .post-card p {
-            font-size: 0.9rem;
-            color: #666;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        .footer-left h4 { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; }
+        .footer-left p { font-size: 0.75rem; color: #bbb; margin-top: 5px; letter-spacing: 1px; }
 
-        /* 모바일 대응 */
+        .footer-right a {
+            text-decoration: none; color: #aaa; font-size: 0.85rem;
+            letter-spacing: 1px; transition: 0.3s;
+        }
+        .footer-right a:hover { color: #1a1a1a; }
+
         @media (max-width: 768px) {
-            .hero-title { font-size: 3rem; }
-            .category-bar { gap: 20px; }
             header { padding: 20px; }
+            .hero-title { font-size: 3rem; }
+            .category-bar { gap: 20px; font-size: 0.7rem; }
+            footer { flex-direction: column; gap: 20px; text-align: center; }
         }
     </style>
 </head>
 <body>
+
+    <div class="admin-controls">
+        <button class="write-btn" onclick="checkAdmin()">POST NEW STORY +</button>
+    </div>
 
     <header>
         <div class="header-left">
@@ -244,49 +230,180 @@
 
     <nav class="category-bar">
         <a href="#marketing">MARKETING</a>
-        <a href="#art">ART&CULTURE</a>
+        <a href="#art">ART & CULTURE</a>
         <a href="#travel">TRAVEL</a>
     </nav>
 
     <section id="marketing" class="content-section">
-        <h2 style="font-family: 'Noto Serif KR', serif; font-size: 2.5rem; margin-bottom: 10px;">Marketing</h2>
-        <p style="color: #888;">최근 마케팅 인사이트 및 포트폴리오</p>
-        
-        <div class="recent-posts">
-            <a href="#" class="post-card">
-                <h3>공간 브랜딩의 새로운 패러다임</h3>
-                <p>성수동 팝업스토어 사례를 통해 분석한 소비자 경험 마케팅의 핵심 전략을 소개합니다.</p>
-            </a>
-            <a href="#" class="post-card">
-                <h3>데이터로 읽는 트렌드 분석</h3>
-                <p>2026년 상반기 소비자 심리 변화와 마케터가 주목해야 할 키워드 리포트.</p>
-            </a>
+        <div class="section-header">
+            <h2>Marketing</h2>
+            <p>최근 마케팅 인사이트 및 포트폴리오</p>
+        </div>
+        <div id="marketing-posts" class="post-grid">
+            </div>
+        <div style="text-align: center;">
+            <div class="view-all-btn" onclick="toggleViewAll('marketing')">VIEW ALL PROJECTS</div>
         </div>
     </section>
 
     <section id="art" class="content-section" style="background-color: #fafafa;">
-        <h2 style="font-family: 'Noto Serif KR', serif; font-size: 2.5rem; margin-bottom: 10px;">Art & Culture</h2>
-        <p style="color: #888;">서양 미술과 문화에 대한 깊이 있는 기록</p>
-
-        <div class="recent-posts">
-            <a href="#" class="post-card">
-                <h3>베르메르의 빛과 그림자</h3>
-                <p>네덜란드 황금기 거장이 남긴 정교한 빛의 묘사가 현대 사진술에 미친 영향에 대하여.</p>
-            </a>
-            <a href="#" class="post-card">
-                <h3>서양 고전 음악의 마케팅적 가치</h3>
-                <p>클래식 음악이 럭셔리 브랜드의 이미지 구축에 사용되는 심리학적 이유.</p>
-            </a>
+        <div class="section-header">
+            <h2>Art & Culture</h2>
+            <p>서양 미술과 문화에 대한 깊이 있는 기록</p>
+        </div>
+        <div id="art-posts" class="post-grid">
+            </div>
+        <div style="text-align: center;">
+            <div class="view-all-btn" onclick="toggleViewAll('art')">VIEW ALL STORIES</div>
         </div>
     </section>
 
+    <section id="travel" class="content-section">
+        <div class="section-header">
+            <h2>Travel</h2>
+            <p>시선이 머무는 장소, 여행의 기록</p>
+        </div>
+        <div id="travel-posts" class="post-grid">
+            </div>
+        <div style="text-align: center;">
+            <div class="view-all-btn" onclick="toggleViewAll('travel')">VIEW ALL JOURNEYS</div>
+        </div>
+    </section>
+
+    <div id="write-modal" class="modal">
+        <span class="modal-close" onclick="closeModal('write-modal')">✕</span>
+        <div class="modal-content">
+            <h2 style="font-family: 'Noto Serif KR', serif; margin-bottom: 30px;">New Post</h2>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="post-category">
+                    <option value="marketing">Marketing</option>
+                    <option value="art">Art & Culture</option>
+                    <option value="travel">Travel</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="post-title" placeholder="제목을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea id="post-content" placeholder="내용을 입력하세요."></textarea>
+            </div>
+            <button class="save-btn" onclick="savePost()">PUBLISH POST</button>
+        </div>
+    </div>
+
+    <div id="read-modal" class="modal">
+        <span class="modal-close" onclick="closeModal('read-modal')">✕</span>
+        <div class="modal-content" id="read-content">
+            </div>
+    </div>
+
     <footer>
-        <a href="#" class="footer-brand" style="text-decoration: none; color: inherit; font-family: 'Noto Serif KR', serif; font-size: 1.2rem; font-weight: 700; display: block; margin-bottom: 15px; text-align: center;">Juhee Lee</a>
-        <p class="footer-copyright" style="text-align: center; color: #bbb; font-size: 0.7rem; letter-spacing: 2px;">
-            © 2026. All Rights Reserved. <br>
-            <span style="opacity: 0.6; font-size: 0.6rem; margin-top: 5px; display: inline-block;">Published with GitHub Pages</span>
-        </p>
+        <div class="footer-left">
+            <h4>Juhee Lee Blog</h4>
+            <p>© 2026. All Rights Reserved.</p>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.linkedin.com/in/juhee-lee-33676335b/" target="_blank">LINKEDIN</a>
+        </div>
     </footer>
+
+    <script>
+        // 초기 샘플 데이터
+        let posts = JSON.parse(localStorage.getItem('juheePosts')) || [
+            {id: 1, category: 'marketing', title: '공간 브랜딩의 새로운 패러다임', content: '성수동 팝업스토어 사례를 통해 분석한 소비자 경험 마케팅의 핵심 전략을 소개합니다. 공간은 이제 단순히 물건을 파는 곳이 아니라 경험을 파는 곳이 되었습니다.', date: '2026-03-05'},
+            {id: 2, category: 'marketing', title: '데이터로 읽는 트렌드 분석', content: '2026년 상반기 소비자 심리 변화와 마케터가 주목해야 할 키워드 리포트. Z세대의 소비 패턴을 중심으로 분석했습니다.', date: '2026-03-04'},
+            {id: 3, category: 'art', title: '베르메르의 빛과 그림자', content: '네덜란드 황금기 거장이 남긴 정교한 빛의 묘사가 현대 사진술에 미친 영향에 대하여. 그의 캔버스는 마치 카메라 루시다를 사용한 듯 정교합니다.', date: '2026-03-03'},
+            {id: 4, category: 'art', title: '서양 고전 음악의 마케팅적 가치', content: '클래식 음악이 럭셔리 브랜드의 이미지 구축에 사용되는 심리학적 이유를 고찰합니다.', date: '2026-03-02'},
+            {id: 5, category: 'travel', title: '파리의 숨겨진 골목들', content: '에펠탑보다 아름다운 파리 5구의 작은 서점과 카페 리스트를 공유합니다.', date: '2026-03-01'}
+        ];
+
+        let viewStatus = { marketing: false, art: false, travel: false };
+
+        function renderPosts() {
+            const categories = ['marketing', 'art', 'travel'];
+            
+            categories.forEach(cat => {
+                const container = document.getElementById(`${cat}-posts`);
+                const filtered = posts.filter(p => p.category === cat).sort((a,b) => b.id - a.id);
+                const displayPosts = viewStatus[cat] ? filtered : filtered.slice(0, 2);
+                
+                container.innerHTML = displayPosts.map(post => `
+                    <div class="post-card" onclick="readPost(${post.id})">
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                        <span style="font-size: 0.7rem; color: #ccc; margin-top: 15px; display: block;">${post.date}</span>
+                    </div>
+                `).join('');
+            });
+        }
+
+        function toggleViewAll(cat) {
+            viewStatus[cat] = !viewStatus[cat];
+            const btn = document.querySelector(`#${cat} .view-all-btn`);
+            btn.innerText = viewStatus[cat] ? "CLOSE" : "VIEW ALL";
+            renderPosts();
+        }
+
+        function checkAdmin() {
+            const pw = prompt("관리자 비밀번호를 입력하세요:");
+            if(pw === "7084") {
+                document.getElementById('write-modal').style.display = 'block';
+            } else {
+                alert("비밀번호가 틀렸습니다.");
+            }
+        }
+
+        function savePost() {
+            const title = document.getElementById('post-title').value;
+            const cat = document.getElementById('post-category').value;
+            const content = document.getElementById('post-content').value;
+            
+            if(!title || !content) return alert("내용을 채워주세요.");
+
+            const newPost = {
+                id: Date.now(),
+                category: cat,
+                title: title,
+                content: content,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            posts.push(newPost);
+            localStorage.setItem('juheePosts', JSON.stringify(posts));
+            
+            alert("글이 발행되었습니다!");
+            closeModal('write-modal');
+            renderPosts();
+        }
+
+        function readPost(id) {
+            const post = posts.find(p => p.id === id);
+            const readContent = document.getElementById('read-content');
+            readContent.innerHTML = `
+                <p style="color: #997a5d; font-weight: 600; letter-spacing: 2px; margin-bottom: 10px;">${post.category.toUpperCase()}</p>
+                <h1 style="font-family: 'Noto Serif KR', serif; font-size: 3rem; margin-bottom: 30px; line-height: 1.2;">${post.title}</h1>
+                <p style="color: #888; margin-bottom: 50px;">Date: ${post.date}</p>
+                <div style="font-size: 1.1rem; line-height: 2; color: #333; white-space: pre-wrap;">${post.content}</div>
+            `;
+            document.getElementById('read-modal').style.display = 'block';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = "none";
+            }
+        }
+
+        // 초기 렌더링
+        renderPosts();
+    </script>
 
 </body>
 </html>
